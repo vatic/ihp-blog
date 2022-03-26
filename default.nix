@@ -12,6 +12,7 @@ let
             text
             hlint
             p.ihp
+            mmark # <--- added markdown support
         ];
         otherDeps = p: with p; [
             # Native dependencies, e.g. imagemagick

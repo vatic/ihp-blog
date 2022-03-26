@@ -39,12 +39,25 @@
 
 .inner {
   position: absolute;
-  top: 15%;
+  top: 10%;
   margin: auto;
   padding: 2em;
 }
 .inner h1 {
   color: #f97300;
+}
+
+.inner p {
+  color: #666;
+  font-size: 20px;
+  width: 50%;
+  line-height: 1.5;
+}
+
+.inner button {
+  border: 1px solid #f97300;
+  background: #f97300;
+  color: #fff;
 }
 
 .description {
