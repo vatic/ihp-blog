@@ -21,10 +21,16 @@ defaultLayout inner = H.docTypeHtml ! A.lang "en" $ [hsx|
     <title>{pageTitleOrDefault "App"}</title>
 </head>
 <body>
-    <div class="container mt-4">
-        {renderFlashMessages}
-        {inner}
-    </div>
+    {topMenu}
+        <header class="header">
+            <div class="overlay"></div>
+            <div class="container mt-4">
+                <div class="inner">
+                    {renderFlashMessages}
+                    {inner}
+                </div>
+            </div>
+        </header>
 </body>
 |]
 
@@ -71,3 +77,34 @@ metaTags = [hsx|
     <meta property="og:description" content="TODO"/>
     {autoRefreshMeta}
 |]
+
+topMenu :: Html
+topMenu = [hsx|
+    <nav class="navbar navbar-expand-lg fixed-top ">
+        <a class="navbar-brand" href="/">Home</a>
+        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+            <span class="navbar-toggler-icon"></span>
+        </button>
+        <div class="collapse navbar-collapse " id="navbarSupportedContent">
+            <ul class="navbar-nav mr-4">
+              
+              <li class="nav-item">
+                <a class="nav-link" href="#">About</a>
+              </li>
+              <li class="nav-item">
+                <a class="nav-link " href="#">Portfolio</a>
+              </li>
+              <li class="nav-item">
+                <a class="nav-link " href="#">Team</a>
+              </li>
+              <li class="nav-item">
+                <a class="nav-link " href="/Posts">Posts</a>
+              </li>
+              <li class="nav-item">
+                <a class="nav-link " href="#">Contact</a>
+              </li>
+            </ul>
+       </div>
+    </nav>
+    |]
+
