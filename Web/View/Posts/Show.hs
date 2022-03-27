@@ -3,7 +3,7 @@ module Web.View.Posts.Show where
 import qualified Text.MMark as MMark
 import Web.View.Prelude
 
-data ShowView = ShowView { post :: Post }
+data ShowView = ShowView { post :: Include "comments" Post }
 
 instance View ShowView where
     html ShowView { .. } = [hsx|
@@ -13,6 +13,7 @@ instance View ShowView where
         <p>{get #body post |> renderMarkdown}</p>
 
         <a href={NewCommentAction (get #id post)}>Add Comment</a>
+        <div>{forEach (get #comments post) renderComment}</div>
     |]
         where
             breadcrumb = renderBreadcrumb
@@ -23,4 +24,11 @@ instance View ShowView where
                 case text |> MMark.parse "" of
                     Left error -> "Something went wrong"
                     Right markdown -> MMark.render markdown |> tshow |> preEscapedToHtml
+
+            renderComment comment = [hsx|
+                    <div class="mt-4">
+                        <h5>{get #author comment}</h5>
+                        <p>{get #body comment}</p>
+                    </div>
+                |]
 

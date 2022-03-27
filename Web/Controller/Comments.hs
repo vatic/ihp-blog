@@ -11,9 +11,11 @@ instance Controller CommentsController where
         comments <- query @Comment |> fetch
         render IndexView { .. }
 
-    action NewCommentAction = do
-        let comment = newRecord
-        render NewView { .. }
+    action NewCommentAction { postId } = do
+            let comment = newRecord
+                    |> set #postId postId
+            post <- fetch postId
+            render NewView { .. }
 
     action ShowCommentAction { commentId } = do
         comment <- fetch commentId
@@ -39,11 +41,13 @@ instance Controller CommentsController where
         comment
             |> buildComment
             |> ifValid \case
-                Left comment -> render NewView { .. } 
+                Left comment -> do
+                    post <- fetch (get #postId comment) -- <---- NEW
+                    render NewView { .. } 
                 Right comment -> do
                     comment <- comment |> createRecord
                     setSuccessMessage "Comment created"
-                    redirectTo CommentsAction
+                    redirectTo ShowPostAction { postId = get #postId comment }
 
     action DeleteCommentAction { commentId } = do
         comment <- fetch commentId

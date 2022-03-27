@@ -24,7 +24,7 @@ defaultLayout inner = H.docTypeHtml ! A.lang "en" $ [hsx|
     {topMenu}
         <header class="header">
             <div class="overlay"></div>
-            <div class="container mt-4">
+            <div class="container">
                 <div class="inner">
                     {renderFlashMessages}
                     {inner}
